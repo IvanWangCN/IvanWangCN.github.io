@@ -1,0 +1,25 @@
+---
+import { catMeta } from '../lib/categories';
+
+interface Props {
+  cats: { path: string; count: number }[];
+}
+const { cats } = Astro.props;
+---
+
+<div class="cat-grid">
+  {
+    cats.map((cat) => {
+      const meta = catMeta(cat.path);
+      return (
+        <a class="cat-card" href={`/notes/${cat.path}/`}>
+          <span class="name">
+            {meta.title}
+            <span class="count">{cat.count}</span>
+          </span>
+          {meta.desc && <p class="desc">{meta.desc}</p>}
+        </a>
+      );
+    })
+  }
+</div>

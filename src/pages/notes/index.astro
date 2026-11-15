@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import NoteList from '../../components/NoteList.astro';
+import CategoryGrid from '../../components/CategoryGrid.astro';
+import { getNotes, allCats, notesIn } from '../../lib/notes';
+
+const notes = await getNotes();
+const topCats = allCats(notes)
+  .filter((c) => !c.includes('/'))
+  .map((c) => ({ path: c, count: notesIn(notes, c).length }));
+---
+
+<Base title="笔记" description="技术、日常工作与读书笔记。">
+  <div class="wrap page-head">
+    <h1>笔记</h1>
+    <p class="muted">持续记录，分类按目录组织。</p>
+  </div>
+
+  {
+    topCats.length > 0 && (
+      <div class="wrap" style="padding-bottom:40px">
+        <CategoryGrid cats={topCats} />
+      </div>
+    )
+  }
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>全部笔记</h2>
+        <span class="mono muted">{notes.length} 篇</span>
+      </div>
+      <NoteList notes={notes} />
+    </div>
+  </section>
+</Base>

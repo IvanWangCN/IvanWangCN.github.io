@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../lib/site';
+---
+
+<Base title="项目" description="我做过的一些东西。">
+  <div class="wrap page-head">
+    <h1>项目</h1>
+    <p class="muted">TODO: 一句话说明你关心什么类型的项目。</p>
+  </div>
+
+  {
+    site.projects.length > 0 && (
+      <section class="wrap" style="padding-bottom:56px">
+        <div class="proj-grid">
+          {site.projects.map((p) => (
+            <a class="proj-card" href={p.url} target="_blank" rel="noopener noreferrer">
+              <h3>{p.title}</h3>
+              <p>{p.desc}</p>
+              <ul class="stack">
+                {p.stack.map((s) => (
+                  <li>{s}</li>
+                ))}
+              </ul>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Base>

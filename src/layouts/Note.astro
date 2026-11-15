@@ -1,0 +1,74 @@
+---
+import Base from './Base.astro';
+import { catOf, noteUrl, fmtDate, readingTime, type Note } from '../lib/notes';
+import { catCrumb } from '../lib/categories';
+
+interface Props {
+  note: Note;
+  Content: any;
+  newer?: Note;
+  older?: Note;
+}
+const { note, Content, newer, older } = Astro.props;
+
+const trail = [
+  { href: '/notes/', label: '笔记' },
+  ...catCrumb(catOf(note)).map((c) => ({ href: `/notes/${c.path}/`, label: c.title })),
+];
+---
+
+<Base title={note.data.title} description={note.data.summary}>
+  <div class="wrap">
+    <div class="article">
+      <nav class="breadcrumb" aria-label="面包屑">
+        {
+          trail.map((crumb, i) => (
+            <>
+              <a href={crumb.href}>{crumb.label}</a>
+              {i < trail.length - 1 && <span aria-hidden="true">/</span>}
+            </>
+          ))
+        }
+      </nav>
+
+      <article>
+        <header>
+          <h1>{note.data.title}</h1>
+          <div class="meta mono">
+            <time datetime={fmtDate(note.data.date)}>{fmtDate(note.data.date)}</time>
+            <span>{readingTime(note)}</span>
+            {
+              note.data.tags.length > 0 && (
+                <span>{note.data.tags.map((t) => `#${t}`).join(' ')}</span>
+              )
+            }
+          </div>
+        </header>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="同分类上下篇">
+        {
+          older ? (
+            <a href={noteUrl(older)}>
+              <span class="dir">← 上一篇</span>
+              {older.data.title}
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          newer && (
+            <a class="next" href={noteUrl(newer)}>
+              <span class="dir">下一篇 →</span>
+              {newer.data.title}
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </div>
+</Base>

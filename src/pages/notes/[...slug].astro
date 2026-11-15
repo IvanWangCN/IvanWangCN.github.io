@@ -1,0 +1,89 @@
+---
+import Base from '../../layouts/Base.astro';
+import Note from '../../layouts/Note.astro';
+import NoteList from '../../components/NoteList.astro';
+import CategoryGrid from '../../components/CategoryGrid.astro';
+import { render } from 'astro:content';
+import {
+  getNotes,
+  allCats,
+  notesIn,
+  subCats,
+  siblings,
+  catOf,
+  type Note as NoteEntry,
+} from '../../lib/notes';
+import { catMeta, catCrumb } from '../../lib/categories';
+
+// 一个路由干两件事：命中 md 就是笔记详情，命中目录就是分类聚合页。
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return [
+    ...allCats(notes).map((dir) => ({ params: { slug: dir }, props: { kind: 'cat' as const, dir } })),
+    ...notes.map((note) => ({ params: { slug: note.id }, props: { kind: 'note' as const, note } })),
+  ];
+}
+
+const props = Astro.props as
+  | { kind: 'cat'; dir: string }
+  | { kind: 'note'; note: NoteEntry };
+
+const allNotes = await getNotes();
+---
+
+{
+  props.kind === 'note' ? (
+    await (async () => {
+      const { note } = props;
+      const { Content } = await render(note);
+      const { newer, older } = siblings(allNotes, note);
+      return <Note note={note} Content={Content} newer={newer} older={older} />;
+    })()
+  ) : (
+    await (async () => {
+      const { dir } = props;
+      const meta = catMeta(dir);
+      const kids = subCats(allNotes, dir).map((path) => ({
+        path,
+        count: notesIn(allNotes, path).length,
+      }));
+      const list = allNotes.filter((n) => catOf(n) === dir);
+      const trail = catCrumb(dir);
+      const total = notesIn(allNotes, dir).length;
+      return (
+        <Base title={meta.title} description={meta.desc}>
+          <div class="wrap page-head">
+            <nav class="breadcrumb" aria-label="面包屑">
+              <a href="/notes/">笔记</a>
+              {trail.map((crumb) => (
+                <>
+                  <span aria-hidden="true">/</span>
+                  <a href={`/notes/${crumb.path}/`}>{crumb.title}</a>
+                </>
+              ))}
+            </nav>
+            <h1>{meta.title}</h1>
+            {meta.desc && <p class="muted">{meta.desc}</p>}
+            <p class="mono muted">{total} 篇</p>
+          </div>
+
+          {kids.length > 0 && (
+            <div class="wrap" style="padding-bottom:40px">
+              <CategoryGrid cats={kids} />
+            </div>
+          )}
+
+          {list.length > 0 ? (
+            <section class="section">
+              <div class="wrap">
+                <NoteList notes={list} />
+              </div>
+            </section>
+          ) : (
+            kids.length === 0 && <p class="wrap muted">这个分类还是空的。</p>
+          )}
+        </Base>
+      );
+    })()
+  )
+}

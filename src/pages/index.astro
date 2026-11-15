@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import NoteList from '../components/NoteList.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import { site } from '../lib/site';
+import { getNotes, allCats, notesIn } from '../lib/notes';
+import { catMeta } from '../lib/categories';
+
+const notes = await getNotes();
+const topCats = allCats(notes)
+  .filter((c) => !c.includes('/'))
+  .map((c) => ({ path: c, count: notesIn(notes, c).length }));
+const projects = site.projects.slice(0, 3);
+---
+
+<Base>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="status mono">AI 应用开发</p>
+        <h1>{site.name}</h1>
+        <p class="tagline">{site.tagline}</p>
+        <p class="lead">{site.description}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/notes/">读笔记</a>
+          {site.github && <a class="btn" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>}
+        </div>
+      </div>
+      <aside class="now">
+        <h2 class="mono">Now</h2>
+        <dl>
+          <div>
+            <dt>在读</dt>
+            <dd>{site.now.reading}</dd>
+          </div>
+          <div>
+            <dt>在做</dt>
+            <dd>{site.now.building}</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {
+    topCats.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>笔记分类</h2>
+            <a href="/notes/">全部 →</a>
+          </div>
+          <CategoryGrid cats={topCats} />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    projects.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>精选项目</h2>
+            <a href="/projects/">全部 →</a>
+          </div>
+          <div class="proj-grid">
+            {projects.map((p) => (
+              <a class="proj-card" href={p.url} target="_blank" rel="noopener noreferrer">
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+                <ul class="stack">
+                  {p.stack.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    notes.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>最新笔记</h2>
+            <a href="/notes/">全部 →</a>
+          </div>
+          <NoteList notes={notes.slice(0, 5)} />
+        </div>
+      </section>
+    )
+  }
+</Base>
