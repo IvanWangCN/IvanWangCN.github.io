@@ -361,32 +361,72 @@ time,
 .btn-primary:hover {
   box-shadow: 0 0 24px -8px var(--accent);
 }
-.now {
-  padding: 20px;
+/* NOW 卡片做成终端窗口 */
+.term {
   border: 1px solid var(--border);
   border-radius: var(--r);
   background: var(--surface);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
 }
-.now h2 {
-  margin: 0 0 14px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.term-bar .dots {
+  display: flex;
+  gap: 5px;
+}
+.term-bar .dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.term-bar .term-title {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 0.04em;
   color: var(--muted);
 }
-.now dl {
-  margin: 0;
+.term-body {
   display: grid;
-  gap: 12px;
+  gap: 1px;
+  padding: 14px 14px 16px;
 }
-.now dt {
-  font-size: 12px;
+.term-body p {
+  margin: 0;
+}
+.term-line {
+  color: var(--text);
+}
+.term-line .prompt {
+  margin-right: 7px;
+  color: var(--accent);
+}
+.term-out {
+  padding-left: 14px;
   color: var(--muted);
 }
-.now dd {
-  margin: 2px 0 0;
-  font-size: 14px;
+.term-out .k {
+  display: inline-block;
+  min-width: 36px;
+  margin-right: 6px;
+  color: var(--text);
+}
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  vertical-align: -2px;
+  background: var(--accent);
+  animation: blink 1.4s steps(2, start) infinite;
 }
 
 /* ---------- sections ---------- */
@@ -787,9 +827,7 @@ time,
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .now {
-    max-width: 100%;
-  }
+
 }
 @media (max-width: 640px) {
   .header-inner {
