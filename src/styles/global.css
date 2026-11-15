@@ -135,17 +135,40 @@ time,
   display: flex;
   align-items: center;
   gap: 24px;
-  height: 60px;
+  height: 64px;
 }
 .brand {
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--text);
-  letter-spacing: -0.01em;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
   white-space: nowrap;
 }
 .brand:hover {
   text-decoration: none;
   color: var(--accent);
+}
+/* 站点标记，和 favicon 同一套语言：深底 + 青色字母 */
+.mark {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #0b0f14;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  transition: border-color var(--t), box-shadow var(--t);
+}
+.brand:hover .mark {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px -4px var(--accent);
 }
 .nav {
   display: flex;
@@ -177,11 +200,12 @@ time,
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
-.header-actions .gh {
-  color: var(--muted);
-  font-size: 14px;
+.header-actions .sep {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
 }
 .icon-btn {
   display: grid;
@@ -199,6 +223,7 @@ time,
 .icon-btn:hover {
   color: var(--accent);
   border-color: var(--accent);
+  text-decoration: none;
 }
 .icon-btn svg {
   width: 16px;
@@ -774,7 +799,7 @@ time,
   .nav a {
     font-size: 13px;
   }
-  .header-actions .gh {
+  .brand-name {
     display: none;
   }
   .wrap {
