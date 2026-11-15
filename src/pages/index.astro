@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import avatar from '../assets/avatar.jpg';
 import Base from '../layouts/Base.astro';
 import NoteList from '../components/NoteList.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
@@ -17,6 +19,9 @@ const projects = site.projects.slice(0, 3);
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
+        <div class="avatar">
+          <Image src={avatar} widths={[116, 232]} sizes="116px" format="webp" quality={82} alt="Ivan Wang" />
+        </div>
         <p class="status mono">AI 应用开发</p>
         <h1>{site.name}</h1>
         <p class="tagline">{site.tagline}</p>
@@ -47,7 +52,7 @@ const projects = site.projects.slice(0, 3);
       <section class="section">
         <div class="wrap">
           <div class="section-head">
-            <h2>笔记分类</h2>
+            <h2><span class="idx">01</span>笔记分类</h2>
             <a href="/notes/">全部 →</a>
           </div>
           <CategoryGrid cats={topCats} />
@@ -61,7 +66,7 @@ const projects = site.projects.slice(0, 3);
       <section class="section">
         <div class="wrap">
           <div class="section-head">
-            <h2>精选项目</h2>
+            <h2><span class="idx">02</span>精选项目</h2>
             <a href="/projects/">全部 →</a>
           </div>
           <div class="proj-grid">
@@ -87,7 +92,7 @@ const projects = site.projects.slice(0, 3);
       <section class="section">
         <div class="wrap">
           <div class="section-head">
-            <h2>最新笔记</h2>
+            <h2><span class="idx">03</span>最新笔记</h2>
             <a href="/notes/">全部 →</a>
           </div>
           <NoteList notes={notes.slice(0, 5)} />
