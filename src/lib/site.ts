@@ -1,15 +1,17 @@
 // 站点文案与个人信息：改这里就够了
 export const site = {
-  name: 'Ivan Wang', // TODO: 确认 logo 用哪个（中文名 or 英文名）
-  tagline: '把 LLM 做成能上线的产品', // TODO: 一句话定位
+  name: 'Ivan Wang',
+  role: 'RAG · Agent · LLM 应用',
+  tagline: '把 RAG 和 Agent 做成能上线的客服系统',
   description:
-    'TODO: 两行自我介绍的占位文字。写你做什么方向的 AI 应用、关心什么问题。', // 用于 <meta description>
+    '做基于 RAG + LLM 的智能客服，负责检索、Agent 编排和工具调用这条链路。平时追新模型、读论文，看到能用的就搬进产品里。',
   email: 'TODO@example.com',
   github: 'https://github.com/IvanWangCN',
   twitter: '', // 留空则不显示
   now: {
     reading: 'TODO: 正在读的书',
-    building: 'TODO: 正在做的东西',
+    building: 'RAG + Agent 的智能客服',
+    following: '新模型 / 编排 / 评测方法',
   },
   // TODO: 换成真实项目。没有就把数组清空，首页那块会自动消失。
   projects: [

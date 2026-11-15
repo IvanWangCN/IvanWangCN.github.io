@@ -22,7 +22,7 @@ const projects = site.projects.slice(0, 3);
         <div class="avatar">
           <Image src={avatar} widths={[116, 232]} sizes="116px" format="webp" quality={82} alt="Ivan Wang" />
         </div>
-        <p class="status mono">AI 应用开发</p>
+        <p class="status mono">{site.role}</p>
         <h1>{site.name}</h1>
         <p class="tagline">{site.tagline}</p>
         <p class="lead">{site.description}</p>
@@ -40,6 +40,7 @@ const projects = site.projects.slice(0, 3);
           <p class="term-line"><span class="prompt">$</span>cat now.md</p>
           <p class="term-out"><span class="k">在读</span>{site.now.reading}</p>
           <p class="term-out"><span class="k">在做</span>{site.now.building}</p>
+          <p class="term-out"><span class="k">在追</span>{site.now.following}</p>
           <p class="term-line"><span class="prompt">$</span><span class="cursor" aria-hidden="true"></span></p>
         </div>
       </aside>
