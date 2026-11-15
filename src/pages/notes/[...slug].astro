@@ -35,9 +35,11 @@ const allNotes = await getNotes();
   props.kind === 'note' ? (
     await (async () => {
       const { note } = props;
-      const { Content } = await render(note);
+      const { Content, headings } = await render(note);
       const { newer, older } = siblings(allNotes, note);
-      return <Note note={note} Content={Content} newer={newer} older={older} />;
+      return (
+        <Note note={note} Content={Content} headings={headings} newer={newer} older={older} />
+      );
     })()
   ) : (
     await (async () => {

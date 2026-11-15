@@ -644,8 +644,54 @@ time,
 }
 .article {
   max-width: var(--w-read);
-  margin: 0 auto;
+  margin: 0;
   padding: 28px 0 48px;
+}
+/* 阅读区 720 + 右侧目录栏，整行铺满 1100 的容器 */
+.reading-grid {
+  display: grid;
+  gap: 0 48px;
+}
+.rail {
+  display: none;
+}
+@media (min-width: 1000px) {
+  .reading-grid {
+    grid-template-columns: minmax(0, var(--w-read)) minmax(0, 1fr);
+  }
+  .rail {
+    display: block;
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    padding: 28px 0 0;
+  }
+}
+.rail-title {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rail ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0 0 0 12px;
+  border-left: 1px solid var(--border);
+  list-style: none;
+  font-size: 12.5px;
+}
+.rail li.d3 {
+  padding-left: 10px;
+}
+.rail a {
+  color: var(--muted);
+}
+.rail a:hover {
+  color: var(--accent);
+  text-decoration: none;
 }
 .article header {
   padding-bottom: 24px;

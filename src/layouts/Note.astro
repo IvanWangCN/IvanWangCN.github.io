@@ -6,69 +6,88 @@ import { catCrumb } from '../lib/categories';
 interface Props {
   note: Note;
   Content: any;
+  headings: { depth: number; slug: string; text: string }[];
   newer?: Note;
   older?: Note;
 }
-const { note, Content, newer, older } = Astro.props;
+const { note, Content, headings, newer, older } = Astro.props;
 
 const trail = [
   { href: '/notes/', label: '笔记' },
   ...catCrumb(catOf(note)).map((c) => ({ href: `/notes/${c.path}/`, label: c.title })),
 ];
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
 <Base title={note.data.title} description={note.data.summary}>
   <div class="wrap">
-    <div class="article">
-      <nav class="breadcrumb" aria-label="面包屑">
-        {
-          trail.map((crumb, i) => (
-            <>
-              <a href={crumb.href}>{crumb.label}</a>
-              {i < trail.length - 1 && <span aria-hidden="true">/</span>}
-            </>
-          ))
-        }
-      </nav>
+    <div class="reading-grid">
+      <div class="article">
+        <nav class="breadcrumb" aria-label="面包屑">
+          {
+            trail.map((crumb, i) => (
+              <>
+                <a href={crumb.href}>{crumb.label}</a>
+                {i < trail.length - 1 && <span aria-hidden="true">/</span>}
+              </>
+            ))
+          }
+        </nav>
 
-      <article>
-        <header>
-          <h1>{note.data.title}</h1>
-          <div class="meta mono">
-            <time datetime={fmtDate(note.data.date)}>{fmtDate(note.data.date)}</time>
-            <span>{readingTime(note)}</span>
-            {
-              note.data.tags.length > 0 && (
-                <span>{note.data.tags.map((t) => `#${t}`).join(' ')}</span>
-              )
-            }
+        <article>
+          <header>
+            <h1>{note.data.title}</h1>
+            <div class="meta mono">
+              <time datetime={fmtDate(note.data.date)}>{fmtDate(note.data.date)}</time>
+              <span>{readingTime(note)}</span>
+              {
+                note.data.tags.length > 0 && (
+                  <span>{note.data.tags.map((t) => `#${t}`).join(' ')}</span>
+                )
+              }
+            </div>
+          </header>
+          <div class="prose">
+            <Content />
           </div>
-        </header>
-        <div class="prose">
-          <Content />
-        </div>
-      </article>
+        </article>
 
-      <nav class="pager" aria-label="同分类上下篇">
-        {
-          older ? (
-            <a href={noteUrl(older)}>
-              <span class="dir">← 上一篇</span>
-              {older.data.title}
-            </a>
-          ) : (
-            <span />
-          )
-        }
-        {
-          newer && (
-            <a class="next" href={noteUrl(newer)}>
-              <span class="dir">下一篇 →</span>
-              {newer.data.title}
-            </a>
-          )
-        }
-      </nav>
+        <nav class="pager" aria-label="同分类上下篇">
+          {
+            older ? (
+              <a href={noteUrl(older)}>
+                <span class="dir">← 上一篇</span>
+                {older.data.title}
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            newer && (
+              <a class="next" href={noteUrl(newer)}>
+                <span class="dir">下一篇 →</span>
+                {newer.data.title}
+              </a>
+            )
+          }
+        </nav>
+      </div>
+
+      {
+        toc.length > 1 && (
+          <aside class="rail" aria-label="本页目录">
+            <p class="rail-title mono">目录</p>
+            <ul>
+              {toc.map((h) => (
+                <li class={`d${h.depth}`}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
     </div>
   </div>
 </Base>
