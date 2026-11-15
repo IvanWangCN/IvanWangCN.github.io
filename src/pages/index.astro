@@ -2,16 +2,8 @@
 import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.jpg';
 import Base from '../layouts/Base.astro';
-import NoteList from '../components/NoteList.astro';
-import CategoryGrid from '../components/CategoryGrid.astro';
 import { site } from '../lib/site';
-import { getNotes, allCats, notesIn } from '../lib/notes';
-import { catMeta } from '../lib/categories';
 
-const notes = await getNotes();
-const topCats = allCats(notes)
-  .filter((c) => !c.includes('/'))
-  .map((c) => ({ path: c, count: notesIn(notes, c).length }));
 const projects = site.projects.slice(0, 3);
 ---
 
@@ -48,25 +40,11 @@ const projects = site.projects.slice(0, 3);
   </section>
 
   {
-    topCats.length > 0 && (
-      <section class="section">
-        <div class="wrap">
-          <div class="section-head">
-            <h2><span class="idx">01</span>笔记分类</h2>
-            <a href="/notes/">全部 →</a>
-          </div>
-          <CategoryGrid cats={topCats} />
-        </div>
-      </section>
-    )
-  }
-
-  {
     projects.length > 0 && (
       <section class="section">
         <div class="wrap">
           <div class="section-head">
-            <h2><span class="idx">02</span>精选项目</h2>
+            <h2><span class="idx">01</span>精选项目</h2>
             <a href="/projects/">全部 →</a>
           </div>
           <div class="proj-grid">
@@ -82,20 +60,6 @@ const projects = site.projects.slice(0, 3);
               </a>
             ))}
           </div>
-        </div>
-      </section>
-    )
-  }
-
-  {
-    notes.length > 0 && (
-      <section class="section">
-        <div class="wrap">
-          <div class="section-head">
-            <h2><span class="idx">03</span>最新笔记</h2>
-            <a href="/notes/">全部 →</a>
-          </div>
-          <NoteList notes={notes.slice(0, 5)} />
         </div>
       </section>
     )
