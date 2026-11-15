@@ -5,7 +5,7 @@ export const site = {
   tagline: '把 RAG 和 Agent 做成能上线的客服系统',
   description:
     '做基于 RAG + LLM 的智能客服，负责检索、Agent 编排和工具调用这条链路。平时追新模型、读论文，看到能用的就搬进产品里。',
-  email: 'TODO@example.com',
+  email: 'wangjianlong.vip@qq.com',
   github: 'https://github.com/IvanWangCN',
   twitter: '', // 留空则不显示
   now: {
