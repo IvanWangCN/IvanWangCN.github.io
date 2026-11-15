@@ -302,16 +302,6 @@ time,
   background: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
-/* 终端光标 */
-.status::after {
-  content: '';
-  width: 6px;
-  height: 12px;
-  margin-left: 2px;
-  background: var(--accent);
-  opacity: 0.75;
-  animation: blink 1.4s steps(2, start) infinite;
-}
 @keyframes blink {
   to {
     visibility: hidden;
