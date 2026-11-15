@@ -625,7 +625,9 @@ time,
   color: var(--muted);
 }
 .page-head {
-  padding: 40px 0 20px;
+  /* 用长写法，别把 .wrap 的左右内边距冲掉 */
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 .page-head h1 {
   margin: 0 0 6px;
