@@ -158,17 +158,19 @@ time,
   width: 28px;
   height: 28px;
   border-radius: 7px;
-  background: #0b0f14;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-  transition: border-color var(--t), box-shadow var(--t);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  /* 深色模式下用 --bg 得到近黑字形，浅色模式下是白字形 */
+  color: var(--bg);
+  transition: box-shadow var(--t), transform var(--t);
+}
+.mark svg {
+  width: 18px;
+  height: 18px;
 }
 .brand:hover .mark {
-  border-color: var(--accent);
-  box-shadow: 0 0 14px -4px var(--accent);
+  box-shadow: 0 0 16px -4px var(--accent);
+  transform: translateY(-1px);
 }
 .nav {
   display: flex;
