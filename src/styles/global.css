@@ -755,6 +755,13 @@ time,
 .prose pre code {
   font-size: inherit;
 }
+/* ASCII 图（无语言 / text 代码块）必须保持不折行，否则框图全乱；shiki 把 pre-wrap 写死在 inline style 里，所以要 !important */
+.prose pre[data-language='text'],
+.prose pre[data-language='plaintext'] {
+  white-space: pre !important;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
 .prose img {
   border-radius: var(--r);
   border: 1px solid var(--border);
