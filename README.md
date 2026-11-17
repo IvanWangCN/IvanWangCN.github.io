@@ -19,8 +19,8 @@ npm run build    # 产物在 dist/
 目录路径就是 URL 和分类：
 
 ```
-src/content/notes/tech/llm/llm-as-classifier.md
-→ /notes/tech/llm/llm-as-classifier/
+src/content/notes/tech/llm/rag.md
+→ /notes/tech/llm/rag/
 → 分类：技术 / 大模型应用
 ```
 

@@ -8,8 +8,8 @@ tags: [astro]
 文件名和目录名就是 URL，也是分类。没有额外的分类表要维护。
 
 ```
-src/content/notes/tech/llm/llm-as-classifier.md
-→ /notes/tech/llm/llm-as-classifier/
+src/content/notes/tech/llm/rag.md
+→ /notes/tech/llm/rag/
 → 分类：技术 / 大模型应用
 ```
 
